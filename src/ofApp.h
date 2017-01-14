@@ -10,6 +10,7 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+        void exit();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -24,5 +25,23 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
         void stripePattern();
+
+        ofxPanel gui;
+        ofxIntSlider countX;
+        ofxFloatSlider stepX;
+        ofxFloatSlider twistX;
+
+        ofxGuiGroup globalGroup;
+        ofxFloatSlider Scale;
+        ofxFloatSlider Rotate;
+        ofxFloatSlider Background;
+
+        ofxGuiGroup primGroup;
+        ofxFloatSlider shiftY, rotate;
+        ofxVec2Slider size;
+        ofxColorSlider color;
+        ofxToggle filled, type;
+
+        bool showGui;
 		
 };
