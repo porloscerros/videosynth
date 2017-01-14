@@ -43,5 +43,9 @@ class ofApp : public ofBaseApp{
         ofxToggle filled, type;
 
         bool showGui;
+
+        ofxIntSlider countY;
+        ofxFloatSlider stepY, twistY, pinchY;
+        void matrixPattern();
 		
 };
