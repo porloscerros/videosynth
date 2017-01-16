@@ -36,11 +36,18 @@ void ofApp::setup(){
 
     gui.loadFromFile( "settings.xml");
 
+    ofLoadImage(image, "Pacman-cabecera.png");
+
+    video.loadMovie( "sintom.mp4" );
+    video.play();
+
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    video.update();
+    if ( camera.isInitialized() ) camera.update();
 
 }
 
@@ -57,8 +64,8 @@ void ofApp::stripePattern(){
         ofTranslate(0, shiftY);
         ofRotate( rotate );
         ofScale( size->x, size->y );
-        if ( type ) ofRect(-50, -50, 100, 100 );
-        else ofTriangle( 0,0,-50,100,50,100 );
+        if ( type ) ofDrawRectangle(-50, -50, 100, 100 );
+        else ofDrawTriangle( 0,0,-50,100,50,100 );
 
         ofPopMatrix();
     }
@@ -86,6 +93,14 @@ void ofApp::matrixPattern(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground( Background );
+    ofSetColor( 255 );
+    image.draw( 0, 0, ofGetWidth(), ofGetHeight() );
+    ofSetColor( 255 );
+    video.draw (0, 0, ofGetWidth(), ofGetHeight() );
+    if ( camera.isInitialized() ) {
+        ofSetColor( 255 );
+        camera.draw( 0, 0, ofGetWidth(), ofGetHeight() );
+    }
 
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
@@ -105,7 +120,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     if( key == 'z' ) showGui = !showGui;
-    if( key == OF_KEY_RETURN ) ofSaveScreen( "screenshot.png" );
+    if( key == OF_KEY_RETURN ) { ofSaveScreen( "screenshot.png" ); }
     if( key == 's' ) {
         ofFileDialogResult res;
         res = ofSystemSaveDialog( "preset.xml", "Saving Preset");
@@ -113,8 +128,13 @@ void ofApp::keyPressed(int key){
     }
     if( key == 'l' ) {
         ofFileDialogResult res;
-        res = ofSystemLoadDialog ( "Loading Preset");
+        res = ofSystemLoadDialog ( "Loading Preset" );
         if( res.bSuccess ) gui.loadFromFile ( res.filePath );
+    }
+    if( key == 'c' ) {
+        camera.setDeviceID( 0 );
+        camera.setDesiredFrameRate( 30 );
+        camera.initGrabber( 1280, 720 );
     }
 
 }
