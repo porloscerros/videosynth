@@ -25,6 +25,10 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
         void stripePattern();
+        void matrixPattern();
+        void draw2d();
+
+        bool showGui;
 
         ofxPanel gui;
         ofxIntSlider countX;
@@ -42,11 +46,8 @@ class ofApp : public ofBaseApp{
         ofxColorSlider color;
         ofxToggle filled, type;
 
-        bool showGui;
-
         ofxIntSlider countY;
         ofxFloatSlider stepY, twistY, pinchY;
-        void matrixPattern();
 
         ofTexture image;
         ofVideoPlayer video;
@@ -54,6 +55,13 @@ class ofApp : public ofBaseApp{
 
         ofxGuiGroup mixerGroup;
         ofxFloatSlider imageAlpha, videoAlpha, cameraAlpha;
+
+        ofFbo fbo;
+        ofShader shader;
+        ofxToggle kenabled;
+        ofxIntSlider ksectors;
+        ofxFloatSlider kangle, kx, ky;
+
 
 		
 };

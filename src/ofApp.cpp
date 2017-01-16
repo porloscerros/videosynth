@@ -7,6 +7,8 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetBackgroundColor(255,255,255);
 
+    fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
+
     showGui = true;
 
     gui.setup( "Parameters", "settings.xml" );
@@ -43,6 +45,14 @@ void ofApp::setup(){
     mixerGroup.add( videoAlpha.setup( "video", 200,0,255 ));
     mixerGroup.add( cameraAlpha.setup( "camera", 100,0,255 ));
 
+    shader.load( "kaleido.vert", "kaleido.frag" );
+
+    mixerGroup.add( kenabled.setup( "kenabled", true ) );
+    mixerGroup.add( ksectors.setup( "ksectors", 10, 1, 100 ) );
+    mixerGroup.add( kangle.setup( "kangle", 0, -180, 180 ) );
+    mixerGroup.add( kx.setup( "kx", 0.5, 0, 1 ) );
+    mixerGroup.add( ky.setup( "ky", 0.5, 0, 1 ) );
+
     gui.minimizeAll();
     gui.add( &mixerGroup );
 
@@ -50,7 +60,7 @@ void ofApp::setup(){
 
     ofLoadImage(image, "Pacman-cabecera.png");
 
-    video.loadMovie( "sintom.mp4" );
+    video.load( "sintom.mp4" );
     video.play();
 
 
@@ -103,9 +113,10 @@ void ofApp::matrixPattern(){
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw2d(){
     ofBackground( Background );
 
+    ofDisableSmoothing();
     ofEnableBlendMode( OF_BLENDMODE_ADD );
     ofSetColor( 255, imageAlpha );
     image.draw( 0, 0, ofGetWidth(), ofGetHeight() );
@@ -116,6 +127,7 @@ void ofApp::draw(){
         camera.draw( 0, 0, ofGetWidth(), ofGetHeight() );
     }
     ofEnableAlphaBlending();
+    ofEnableSmoothing();
 
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
@@ -128,6 +140,30 @@ void ofApp::draw(){
     matrixPattern();
 
     ofPopMatrix();
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    fbo.begin();
+    draw2d();
+    fbo.end();
+
+    if ( kenabled ) {
+        shader.begin();
+        shader.setUniform1i( "ksectors", ksectors );
+        shader.setUniform1f( "kangleRad", ofDegToRad(kangle) );
+        shader.setUniform2f( "kcenter", kx*ofGetWidth(),
+                             ky*ofGetHeight() );
+        shader.setUniform2f( "screenCenter", 0.5*ofGetWidth(),
+                             0.5*ofGetHeight() );
+    }
+
+
+    ofSetColor( 255 );
+    fbo.draw( 0, 0, ofGetWidth(), ofGetHeight() );
+
+    if ( kenabled ) shader.end();
 
     if (showGui) gui.draw();
 }

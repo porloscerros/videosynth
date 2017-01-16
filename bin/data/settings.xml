@@ -1,22 +1,27 @@
 <group>
-	<countX>134</countX>
+	<countX>30</countX>
 	<stepX>12</stepX>
 	<twistX>2.25</twistX>
 <group/>
-<Scale>0.622449</Scale>
+<Scale>1</Scale>
 	<Rotate>-104.694</Rotate>
 	<Background>0</Background>
 <shiftY>346.939</shiftY>
 	<rotate>-145.102</rotate>
-	<size>10.2124, 3.34028</size>
-	<color>162, 162, 163, 12</color>
+	<size>8.54644, 11.4619</size>
+	<color>142, 140, 138, 193</color>
 	<filled>0</filled>
 	<type>1</type>
-<countY>50</countY>
+<countY>21</countY>
 	<stepY>139</stepY>
 	<twistY>8.7</twistY>
 	<pinchY>0.56</pinchY>
-<image>106.684</image>
-	<video>152.219</video>
-	<camera>65.051</camera>
+<image>50.7398</image>
+	<video>205.561</video>
+	<camera>66.352</camera>
+<kenabled>1</kenabled>
+	<ksectors>9</ksectors>
+	<kangle>-23.8776</kangle>
+	<kx>0.127551</kx>
+	<ky>0.331633</ky>
 </group>
