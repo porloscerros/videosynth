@@ -5,15 +5,18 @@
 <group/>
 <Scale>0.622449</Scale>
 	<Rotate>-104.694</Rotate>
-	<Background>255</Background>
+	<Background>0</Background>
 <shiftY>346.939</shiftY>
 	<rotate>-145.102</rotate>
 	<size>10.2124, 3.34028</size>
-	<color>33, 61, 57, 10</color>
+	<color>162, 162, 163, 12</color>
 	<filled>0</filled>
 	<type>1</type>
 <countY>50</countY>
 	<stepY>139</stepY>
 	<twistY>8.7</twistY>
 	<pinchY>0.56</pinchY>
+<image>106.684</image>
+	<video>152.219</video>
+	<camera>65.051</camera>
 </group>

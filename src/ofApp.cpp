@@ -23,6 +23,7 @@ void ofApp::setup(){
     globalGroup.add( Scale.setup( "Scale", 1, 0.0, 1 ));
     globalGroup.add( Rotate.setup( "Rotate", 0, -180, 180 ));
     globalGroup.add( Background.setup( "Background", 255, 0, 255 ));
+
     gui.add( &globalGroup );
 
     primGroup.setup( "Primitive" );
@@ -32,7 +33,18 @@ void ofApp::setup(){
     primGroup.add( color.setup( "color", ofColor(0), ofColor(0, 0, 0, 0), ofColor(255) ));
     primGroup.add( filled.setup( "filled", false));
     primGroup.add( type.setup( "type", false));
+
     gui.add( &primGroup);
+
+    mixerGroup.setup( "Mixer" );
+    mixerGroup.setHeaderBackgroundColor( ofColor::darkRed );
+    mixerGroup.setBorderColor( ofColor::darkRed );
+    mixerGroup.add( imageAlpha.setup( "image", 100,0,255 ));
+    mixerGroup.add( videoAlpha.setup( "video", 200,0,255 ));
+    mixerGroup.add( cameraAlpha.setup( "camera", 100,0,255 ));
+
+    gui.minimizeAll();
+    gui.add( &mixerGroup );
 
     gui.loadFromFile( "settings.xml");
 
@@ -93,14 +105,17 @@ void ofApp::matrixPattern(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofBackground( Background );
-    ofSetColor( 255 );
+
+    ofEnableBlendMode( OF_BLENDMODE_ADD );
+    ofSetColor( 255, imageAlpha );
     image.draw( 0, 0, ofGetWidth(), ofGetHeight() );
-    ofSetColor( 255 );
+    ofSetColor( 255, videoAlpha );
     video.draw (0, 0, ofGetWidth(), ofGetHeight() );
     if ( camera.isInitialized() ) {
-        ofSetColor( 255 );
+        ofSetColor( 255, cameraAlpha );
         camera.draw( 0, 0, ofGetWidth(), ofGetHeight() );
     }
+    ofEnableAlphaBlending();
 
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);

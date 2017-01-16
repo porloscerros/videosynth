@@ -52,5 +52,8 @@ class ofApp : public ofBaseApp{
         ofVideoPlayer video;
         ofVideoGrabber camera;
 
+        ofxGuiGroup mixerGroup;
+        ofxFloatSlider imageAlpha, videoAlpha, cameraAlpha;
+
 		
 };
