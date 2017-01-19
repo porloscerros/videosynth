@@ -9,17 +9,17 @@
 <shiftY>346.939</shiftY>
 	<rotate>-145.102</rotate>
 	<size>8.54644, 11.4619</size>
-	<color>142, 140, 138, 193</color>
+	<color>181, 183, 188, 81</color>
 	<filled>0</filled>
 	<type>1</type>
 <countY>21</countY>
 	<stepY>139</stepY>
 	<twistY>8.7</twistY>
 	<pinchY>0.56</pinchY>
-<image>50.7398</image>
-	<video>205.561</video>
-	<camera>66.352</camera>
-<kenabled>1</kenabled>
+<image>180.842</image>
+	<video>255</video>
+	<camera>0</camera>
+<kenabled>0</kenabled>
 	<ksectors>9</ksectors>
 	<kangle>-23.8776</kangle>
 	<kx>0.127551</kx>

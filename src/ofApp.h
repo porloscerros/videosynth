@@ -27,6 +27,7 @@ class ofApp : public ofBaseApp{
         void stripePattern();
         void matrixPattern();
         void draw2d();
+        void draw3d();
 
         bool showGui;
 
@@ -61,6 +62,15 @@ class ofApp : public ofBaseApp{
         ofxToggle kenabled;
         ofxIntSlider ksectors;
         ofxFloatSlider kangle, kx, ky;
+
+        ofSpherePrimitive sphere;
+        ofEasyCam cam;
+        ofLight light;
+        ofMaterial material;
+        ofFbo fbo2;
+
+
+
 
 
 		

@@ -63,6 +63,15 @@ void ofApp::setup(){
     video.load( "sintom.mp4" );
     video.play();
 
+    sphere.set( 250, 20);
+    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
+    float w = fbo2.getWidth();
+    float h = fbo2.getHeight();
+    sphere.mapTexCoords(0, h, w, 0);
+    sphere.rotate(180, 0, 1, 0);
+
+
+
 
 }
 
@@ -144,11 +153,45 @@ void ofApp::draw2d(){
 }
 
 //--------------------------------------------------------------
+void ofApp::draw3d(){
+    float time = ofGetElapsedTimef();
+    float longitude = 10*time;
+    float latitude = 10*sin(time*0.8);
+    float radius = 600 + 50*sin(time*0.4);
+
+    fbo2.getTexture().bind();
+
+    //light.setPosition(ofGetWidth()/2, ofGetHeight()/2, 600);
+    //light.enable();
+    material.begin();
+    ofEnableDepthTest();
+
+    light.draw();
+
+    cam.begin();
+    light.setPosition(0, 0, 600);
+    light.enable();
+    cam.orbit ( longitude, latitude, radius, ofPoint(0,0,0) );
+    ofSetColor( ofColor::white );
+    sphere.draw();
+    cam.end();
+
+    ofDisableDepthTest();
+    material.end();
+    light.disable();
+    ofDisableLighting();
+
+    fbo2.getTexture().unbind();
+
+}
+
+//--------------------------------------------------------------
 void ofApp::draw(){
     fbo.begin();
     draw2d();
     fbo.end();
 
+    fbo2.begin();
     if ( kenabled ) {
         shader.begin();
         shader.setUniform1i( "ksectors", ksectors );
@@ -164,6 +207,9 @@ void ofApp::draw(){
     fbo.draw( 0, 0, ofGetWidth(), ofGetHeight() );
 
     if ( kenabled ) shader.end();
+    fbo2.end();
+
+    draw3d();
 
     if (showGui) gui.draw();
 }
@@ -197,6 +243,8 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
+    if ( showGui && x < 250 ) cam.disableMouseInput();
+    else cam.enableMouseInput();
 
 }
 
