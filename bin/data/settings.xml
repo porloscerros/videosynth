@@ -19,9 +19,15 @@
 <image>180.842</image>
 	<video>255</video>
 	<camera>0</camera>
-<kenabled>0</kenabled>
+<kenabled>1</kenabled>
 	<ksectors>9</ksectors>
 	<kangle>-23.8776</kangle>
 	<kx>0.127551</kx>
 	<ky>0.331633</ky>
+<show2d>141.811</show2d>
+	<show3d>145.714</show3d>
+<rad>250</rad>
+	<deform>0.880102</deform>
+	<deformFreq>5.71429</deformFreq>
+	<extrude>0.821429</extrude>
 </group>

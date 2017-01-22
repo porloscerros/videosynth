@@ -68,10 +68,9 @@ class ofApp : public ofBaseApp{
         ofLight light;
         ofMaterial material;
         ofFbo fbo2;
+        ofxFloatSlider show2d, show3d;
+        ofFbo fbo3d;
+        ofxFloatSlider rad, deform, deformFreq, extrude;
+        vector<ofPoint> vertices0;
 
-
-
-
-
-		
 };

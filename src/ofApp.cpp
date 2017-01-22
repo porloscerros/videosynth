@@ -53,6 +53,15 @@ void ofApp::setup(){
     mixerGroup.add( kx.setup( "kx", 0.5, 0, 1 ) );
     mixerGroup.add( ky.setup( "ky", 0.5, 0, 1 ) );
 
+    mixerGroup.add( show2d.setup("show2d", 255, 0, 255) );
+    mixerGroup.add( show3d.setup("show3d", 255, 0, 255) );
+    mixerGroup.add( rad.setup("rad", 250, 0, 500) );
+    mixerGroup.add( deform.setup("deform", 0.3, 0, 1.5) );
+    mixerGroup.add( deformFreq.setup("deformFreq", 3, 0, 10) );
+    mixerGroup.add( extrude.setup("extrude", 1, 0, 1 ) );
+
+    fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
+
     gui.minimizeAll();
     gui.add( &mixerGroup );
 
@@ -63,7 +72,8 @@ void ofApp::setup(){
     video.load( "sintom.mp4" );
     video.play();
 
-    sphere.set( 250, 20);
+    sphere.set( 250, 80);
+    vertices0 = sphere.getMesh().getVertices();
     fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     float w = fbo2.getWidth();
     float h = fbo2.getHeight();
@@ -79,6 +89,30 @@ void ofApp::setup(){
 void ofApp::update(){
     video.update();
     if ( camera.isInitialized() ) camera.update();
+
+    vector<ofPoint> &vertices = sphere.getMesh().getVertices();
+    for (int i=0; i<vertices.size(); i++) {
+    ofPoint v = vertices0[i];
+    v.normalize();
+    float sx = sin( v.x * deformFreq );
+    float sy = sin( v.y * deformFreq );
+    float sz = sin( v.z * deformFreq );
+    v.x += sy * sz * deform;
+    v.y += sx * sz * deform;
+    v.z += sx * sy * deform;
+    v *= rad;
+    vertices[i] = v;
+    }
+
+    ofPixels pixels;
+    fbo2.readToPixels(pixels);
+    for (int i=0; i<vertices.size(); i++) {
+    ofVec2f t = sphere.getMesh().getTexCoords()[i];
+    t.x = ofClamp( t.x, 0, pixels.getWidth()-1 );
+    t.y = ofClamp( t.y, 0, pixels.getHeight()-1 );
+    float br = pixels.getColor(t.x, t.y).getBrightness();
+    vertices[i] *= 1 + br / 255.0 * extrude;
+    }
 
 }
 
@@ -209,7 +243,16 @@ void ofApp::draw(){
     if ( kenabled ) shader.end();
     fbo2.end();
 
+    fbo3d.begin();
+    ofBackground( 0, 0 );
     draw3d();
+    fbo3d.end();
+    ofBackground( 0 );
+    ofSetColor( 255, show2d );
+    fbo2.draw( 0, 0 );
+    ofSetColor( 255, show3d );
+    fbo3d.draw( 0, 0 );
+
 
     if (showGui) gui.draw();
 }
