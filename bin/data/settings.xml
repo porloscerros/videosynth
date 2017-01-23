@@ -9,25 +9,25 @@
 <shiftY>346.939</shiftY>
 	<rotate>-145.102</rotate>
 	<size>3.4444, 3.4444</size>
-	<color>181, 183, 188, 81</color>
+	<color>181, 183, 188, 0</color>
 	<filled>0</filled>
 	<type>1</type>
 <countY>8</countY>
 	<stepY>0</stepY>
 	<twistY>-30</twistY>
 	<pinchY>0.08</pinchY>
-<image>180.842</image>
-	<video>255</video>
+<image>0</image>
+	<video>252.398</video>
 	<camera>0</camera>
 <kenabled>0</kenabled>
 	<ksectors>9</ksectors>
 	<kangle>-23.8776</kangle>
 	<kx>0.127551</kx>
 	<ky>0.331633</ky>
-<show2d>0</show2d>
-	<show3d>248.495</show3d>
-<rad>206.633</rad>
-	<deform>0</deform>
+<show2d>135.306</show2d>
+	<show3d>255</show3d>
+<rad>107.143</rad>
+	<deform>0.206633</deform>
 	<deformFreq>0</deformFreq>
 	<extrude>0</extrude>
 </group>

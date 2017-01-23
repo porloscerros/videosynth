@@ -7,6 +7,9 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetBackgroundColor(255,255,255);
 
+    //fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
+    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
+    //fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
 
     showGui = true;
 
@@ -59,7 +62,6 @@ void ofApp::setup(){
     mixerGroup.add( deformFreq.setup("deformFreq", 3, 0, 10) );
     mixerGroup.add( extrude.setup("extrude", 1, 0, 1 ) );
 
-    fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
 
     gui.minimizeAll();
     gui.add( &mixerGroup );
@@ -68,7 +70,7 @@ void ofApp::setup(){
 
     ofLoadImage(image, "Pacman-cabecera.png");
 
-    video.load( "sintom.mp4" );
+    video.load( "20160113_145431.mp4" );
     video.play();
 
     sphere.set( 250, 80);
@@ -183,26 +185,27 @@ void ofApp::draw2d(){
 
 //--------------------------------------------------------------
 void ofApp::draw3d(){
+    fbo2.getTexture().bind();
+
+    //light.setPosition(ofGetWidth()/2, ofGetHeight()/2, 200);
+    //light.enable();
+    //light.draw();
+    material.begin();
+    ofEnableDepthTest();
+
     float time = ofGetElapsedTimef();
     float longitude = 10*time;
     float latitude = 10*sin(time*0.8);
     float radius = 600 + 50*sin(time*0.4);
 
-    fbo2.getTexture().bind();
-
-    //light.setPosition(ofGetWidth()/2, ofGetHeight()/2, 600);
-    //light.enable();
-    material.begin();
-    ofEnableDepthTest();
-
-    light.draw();
-
     cam.begin();
-    light.setPosition(0, 0, 600);
-    light.enable();
     cam.orbit ( longitude, latitude, radius, ofPoint(0,0,0) );
+    //cam.setPosition(0,0,600);
+    light.setParent(cam);
+    light.enable();
     ofSetColor( ofColor::white );
     sphere.draw();
+
     cam.end();
 
     ofDisableDepthTest();
@@ -221,7 +224,7 @@ void ofApp::draw(){
     fbo.begin();
     draw2d();
     fbo.end();
-
+    //fbo.draw( 0, 0 );
 
     fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     fbo2.begin();
@@ -236,7 +239,9 @@ void ofApp::draw(){
     fbo.draw( 0, 0 );
     if ( kenabled ) shader.end();
     fbo2.end();
+    //fbo2.draw( 0, 0 );
 
+    fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
     fbo3d.begin();
     ofBackground( 0, 0 );
     draw3d();
@@ -280,8 +285,8 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-    if ( showGui && x < 250 ) cam.disableMouseInput();
-    else cam.enableMouseInput();
+    //if ( showGui && x < 250 ) cam.disableMouseInput();
+    //else cam.enableMouseInput();
 
 }
 
