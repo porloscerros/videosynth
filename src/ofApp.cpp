@@ -7,7 +7,6 @@ void ofApp::setup(){
     ofSetFrameRate(60);
     ofSetBackgroundColor(255,255,255);
 
-    fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
 
     showGui = true;
 
@@ -74,7 +73,6 @@ void ofApp::setup(){
 
     sphere.set( 250, 80);
     vertices0 = sphere.getMesh().getVertices();
-    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     float w = fbo2.getWidth();
     float h = fbo2.getHeight();
     sphere.mapTexCoords(0, h, w, 0);
@@ -174,14 +172,11 @@ void ofApp::draw2d(){
 
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
-
     float Scl = pow( Scale, 4.0f );
     ofScale( Scl, Scl );
     ofRotate( Rotate );
-
     //stripePattern();
     matrixPattern();
-
     ofPopMatrix();
 
 }
@@ -221,25 +216,24 @@ void ofApp::draw3d(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+
+    fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     fbo.begin();
     draw2d();
     fbo.end();
 
+
+    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     fbo2.begin();
     if ( kenabled ) {
         shader.begin();
         shader.setUniform1i( "ksectors", ksectors );
         shader.setUniform1f( "kangleRad", ofDegToRad(kangle) );
-        shader.setUniform2f( "kcenter", kx*ofGetWidth(),
-                             ky*ofGetHeight() );
-        shader.setUniform2f( "screenCenter", 0.5*ofGetWidth(),
-                             0.5*ofGetHeight() );
+        shader.setUniform2f( "kcenter", kx*ofGetWidth(), ky*ofGetHeight() );
+        shader.setUniform2f( "screenCenter", 0.5*ofGetWidth(), 0.5*ofGetHeight() );
     }
-
-
     ofSetColor( 255 );
-    fbo.draw( 0, 0, ofGetWidth(), ofGetHeight() );
-
+    fbo.draw( 0, 0 );
     if ( kenabled ) shader.end();
     fbo2.end();
 
@@ -247,12 +241,12 @@ void ofApp::draw(){
     ofBackground( 0, 0 );
     draw3d();
     fbo3d.end();
+
     ofBackground( 0 );
     ofSetColor( 255, show2d );
     fbo2.draw( 0, 0 );
     ofSetColor( 255, show3d );
     fbo3d.draw( 0, 0 );
-
 
     if (showGui) gui.draw();
 }
