@@ -3,13 +3,9 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetWindowTitle( "Video Synth" );
-    ofSetWindowShape(1280,720);
-    ofSetFrameRate(60);
+    ofSetFrameRate(30);
     ofSetBackgroundColor(255,255,255);
 
-    //fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
-    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
-    //fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
 
     showGui = true;
 
@@ -72,6 +68,20 @@ void ofApp::setup(){
 
     video.load( "20160113_145431.mp4" );
     video.play();
+
+
+    fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
+    fbo.begin();
+    ofClear(0);
+    fbo.end();
+    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
+    fbo2.begin();
+    ofClear(0);
+    fbo2.end();
+    fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
+    fbo3d.begin();
+    ofClear(0,0);
+    fbo3d.end();
 
     sphere.set( 250, 80);
     vertices0 = sphere.getMesh().getVertices();
@@ -220,13 +230,11 @@ void ofApp::draw3d(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     fbo.begin();
     draw2d();
     fbo.end();
     //fbo.draw( 0, 0 );
 
-    fbo2.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
     fbo2.begin();
     if ( kenabled ) {
         shader.begin();
@@ -241,7 +249,6 @@ void ofApp::draw(){
     fbo2.end();
     //fbo2.draw( 0, 0 );
 
-    fbo3d.allocate( ofGetWidth(), ofGetHeight(), GL_RGBA );
     fbo3d.begin();
     ofBackground( 0, 0 );
     draw3d();
@@ -252,6 +259,7 @@ void ofApp::draw(){
     fbo2.draw( 0, 0 );
     ofSetColor( 255, show3d );
     fbo3d.draw( 0, 0 );
+
 
     if (showGui) gui.draw();
 }

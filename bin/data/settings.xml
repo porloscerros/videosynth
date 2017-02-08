@@ -3,31 +3,31 @@
 	<stepX>0</stepX>
 	<twistX>-45</twistX>
 <group/>
-<Scale>1</Scale>
+<Scale>0.97449</Scale>
 	<Rotate>-104.694</Rotate>
 	<Background>0</Background>
-<shiftY>346.939</shiftY>
-	<rotate>-145.102</rotate>
-	<size>3.4444, 3.4444</size>
-	<color>181, 183, 188, 0</color>
+<shiftY>-306.122</shiftY>
+	<rotate>-132.245</rotate>
+	<size>2.29904, 3.4444</size>
+	<color>119, 123, 108, 155</color>
 	<filled>0</filled>
 	<type>1</type>
 <countY>8</countY>
 	<stepY>0</stepY>
 	<twistY>-30</twistY>
 	<pinchY>0.08</pinchY>
-<image>0</image>
-	<video>252.398</video>
-	<camera>0</camera>
+<image>255</image>
+	<video>0</video>
+	<camera>105.383</camera>
 <kenabled>0</kenabled>
 	<ksectors>9</ksectors>
 	<kangle>-23.8776</kangle>
 	<kx>0.127551</kx>
 	<ky>0.331633</ky>
-<show2d>135.306</show2d>
+<show2d>167.832</show2d>
 	<show3d>255</show3d>
-<rad>107.143</rad>
-	<deform>0.206633</deform>
+<rad>198.98</rad>
+	<deform>0.214286</deform>
 	<deformFreq>0</deformFreq>
 	<extrude>0</extrude>
 </group>
