@@ -73,4 +73,13 @@ class ofApp : public ofBaseApp{
         ofxFloatSlider rad, deform, deformFreq, extrude;
         vector<ofPoint> vertices0;
 
+        float frequency;
+        float phase;
+        ofSoundPlayer sound;
+        void audioIn(float *input, int bufferSize, int nChannels);
+        float soundLevel;
+        ofxToggle automate;
+
+
+
 };

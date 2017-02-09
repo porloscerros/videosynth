@@ -3,31 +3,32 @@
 	<stepX>0</stepX>
 	<twistX>-45</twistX>
 <group/>
-<Scale>0.97449</Scale>
-	<Rotate>-104.694</Rotate>
+<Scale>1</Scale>
+	<Rotate>-75.3061</Rotate>
 	<Background>0</Background>
 <shiftY>-306.122</shiftY>
 	<rotate>-132.245</rotate>
 	<size>2.29904, 3.4444</size>
 	<color>119, 123, 108, 155</color>
 	<filled>0</filled>
-	<type>1</type>
+	<type>0</type>
 <countY>8</countY>
 	<stepY>0</stepY>
 	<twistY>-30</twistY>
 	<pinchY>0.08</pinchY>
-<image>255</image>
+<image>249.796</image>
 	<video>0</video>
-	<camera>105.383</camera>
-<kenabled>0</kenabled>
-	<ksectors>9</ksectors>
-	<kangle>-23.8776</kangle>
-	<kx>0.127551</kx>
-	<ky>0.331633</ky>
-<show2d>167.832</show2d>
-	<show3d>255</show3d>
-<rad>198.98</rad>
-	<deform>0.214286</deform>
-	<deformFreq>0</deformFreq>
-	<extrude>0</extrude>
+	<camera>255</camera>
+<kenabled>1</kenabled>
+	<ksectors>10</ksectors>
+	<kangle>190.985</kangle>
+	<kx>0.533829</kx>
+	<ky>0.913265</ky>
+<show2d>130.102</show2d>
+	<show3d>253.699</show3d>
+<rad>284.451</rad>
+	<deform>0.63724</deform>
+	<deformFreq>2.5</deformFreq>
+	<extrude>0.392857</extrude>
+<automate>1</automate>
 </group>

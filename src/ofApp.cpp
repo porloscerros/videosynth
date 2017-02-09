@@ -57,7 +57,7 @@ void ofApp::setup(){
     mixerGroup.add( deform.setup("deform", 0.3, 0, 1.5) );
     mixerGroup.add( deformFreq.setup("deformFreq", 3, 0, 10) );
     mixerGroup.add( extrude.setup("extrude", 1, 0, 1 ) );
-
+    mixerGroup.add( automate.setup( "automate", true ) );
 
     gui.minimizeAll();
     gui.add( &mixerGroup );
@@ -66,8 +66,13 @@ void ofApp::setup(){
 
     ofLoadImage(image, "Pacman-cabecera.png");
 
-    video.load( "20160113_145431.mp4" );
+    video.load( "esqueletoYogui.mp4" );
     video.play();
+
+    sound.load("ImaginaryLandscapesNo5.mp3");
+    sound.setVolume( 1 );
+    sound.setLoop( true );
+    //sound.setMultiPlay(true);
 
 
     fbo.allocate( ofGetWidth(), ofGetHeight(), GL_RGB );
@@ -90,15 +95,18 @@ void ofApp::setup(){
     sphere.mapTexCoords(0, h, w, 0);
     sphere.rotate(180, 0, 1, 0);
 
+    phase = 0;
+    frequency = 0.1;
 
-
-
+    soundLevel = 0;
+    ofSoundStreamSetup( 0, 1, 44100, 128, 4 );
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     video.update();
     if ( camera.isInitialized() ) camera.update();
+    ofSoundUpdate();
 
     vector<ofPoint> &vertices = sphere.getMesh().getVertices();
     for (int i=0; i<vertices.size(); i++) {
@@ -123,6 +131,38 @@ void ofApp::update(){
     float br = pixels.getColor(t.x, t.y).getBrightness();
     vertices[i] *= 1 + br / 255.0 * extrude;
     }
+
+    if( automate ) {
+        kangle = ofGetElapsedTimef();
+        float dt = 1.0 / 60.0;
+        phase += dt * frequency * M_TWO_PI;
+        float value = sin( phase );
+        kx = ofMap(value, -1, 1, 0.45, 0.55);
+        float phase1 = 0.2 * ofGetElapsedTimef();
+        deform = ofNoise( phase1 );
+
+        float *spectrum = ofSoundGetSpectrum(128);
+        double level = 0;
+        for ( int i=0; i<128; i++ ) {
+            level += spectrum[i] * spectrum[i];
+        }
+        level = sqrt( level /128 );
+        level += soundLevel;
+        float newRad = ofMap( level, 0, 1, 150, 400, true );
+        rad = rad + (0.1 * ( newRad-rad ));
+    }
+
+}
+
+//--------------------------------------------------------------
+void ofApp::audioIn(float *input, int bufferSize, int nChannels ){
+
+    double v = 0;
+    for ( int i = 0; i<bufferSize; i++) {
+        v += input[i] * input[i];
+    }
+    v = sqrt( v / bufferSize );
+    soundLevel = v;
 
 }
 
@@ -282,6 +322,11 @@ void ofApp::keyPressed(int key){
         camera.setDeviceID( 0 );
         camera.setDesiredFrameRate( 30 );
         camera.initGrabber( 1280, 720 );
+    }
+
+    if ( key == 'p' ) {
+        if ( !sound.isPlaying() ) sound.play();
+        else sound.stop();
     }
 
 }
